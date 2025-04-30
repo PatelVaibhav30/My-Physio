@@ -11,7 +11,7 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET, //generate a random string and set it as your secret
   callbacks: {
     async session({ session, token }: { session: any; token: any }) {
-      session.user.id = token.sub; // Attach the user ID
+      session.user.id = token.sub; 
       return session;
     },
   },
