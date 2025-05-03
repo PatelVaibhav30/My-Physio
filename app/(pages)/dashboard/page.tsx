@@ -1,18 +1,13 @@
-import { getNotes } from '@/action/noteAction';
 import { createUser } from '@/action/userAction';
 import Notes from '@/app/(component)/Notes';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { Button } from '@/components/ui/button';
-import { Pin } from 'lucide-react';
 import { getServerSession } from 'next-auth';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React from 'react'
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
     const user = await createUser(session?.user?.name || "Anonymous", session?.user?.email || "anonymous@example.com", "");
-
     return (
         <div className="max-w-[1250px] mx-auto px-6 py-6 border-2 rounded-md bg-white">
             <h1 className='text-3xl font-semibold mb-6'>Dashboard</h1>

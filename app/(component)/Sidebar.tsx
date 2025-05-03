@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
-import {LayoutDashboard, PersonStanding } from 'lucide-react'
+import {LayoutDashboard, PersonStanding, Stethoscope } from 'lucide-react'
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
 const sidebarItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/patient', label: 'Patient list', icon:  PersonStanding},
+    { href: '/visit', label: 'Visit', icon:  Stethoscope},
 ]
 
 interface SidebarProps {

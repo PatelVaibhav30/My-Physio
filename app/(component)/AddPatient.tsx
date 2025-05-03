@@ -8,8 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from "react-hook-form";
 import { Textarea } from '@/components/ui/textarea';
+import toast from 'react-hot-toast';
+import { addPatient } from '@/action/patientAction';
 
-type PatientFormData = {
+export type PatientFormData = {
+    doctorId: string;
     name: string;
     age: string;
     gender: "M" | "F" | "";
@@ -23,6 +26,7 @@ const AddPatient = () => {
     const [open, setOpen] = useState(false);
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<PatientFormData>({
         defaultValues: {
+            doctorId: "",
             name: "",
             age: "",
             gender: "",
@@ -35,14 +39,20 @@ const AddPatient = () => {
     const gender = watch("gender");
 
 
-    const onSubmit = (data: PatientFormData) => {
+    const onSubmit = async (data: PatientFormData) => {
         const phoneWithPrefix = `+91-${data.phone}`;
-        const updatedData = { ...data, phone: phoneWithPrefix };
+        const updatedData = { ...data, phone: phoneWithPrefix, doctorId: localStorage.getItem("userId") || "" };
 
-        console.log("Patient Data:", updatedData);
-        alert("Patient submitted!");
-        reset();
-        setOpen(false);
+        try {
+            await addPatient(updatedData);
+            reset();
+            setOpen(false);
+            toast.success("Patient added");
+        } catch (error) {
+            console.error(error);
+            toast.error("Error occurred while adding patient.");
+        }
+
     };
 
     const handleGenderSelect = (gender: "Male" | "Female") => {
@@ -67,6 +77,7 @@ const AddPatient = () => {
                         </DialogHeader>
 
                         <div className="grid gap-4 py-4">
+                            <input type="hidden" {...register("doctorId")} />
                             <div className="flex items-start justify-between gap-4">
                                 <div className="flex-1">
                                     <Label htmlFor="name">Name</Label>

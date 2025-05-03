@@ -20,7 +20,7 @@ model Users {
   password  String?
   createdAt DateTime @default(now())
 
-  notes     Notes[]
+  notes    Notes[]
 }
 
 model Notes {
@@ -32,4 +32,18 @@ model Notes {
   updatedAt DateTime @updatedAt
   userId    String   @db.ObjectId
   user      Users    @relation(fields: [userId], references: [id])
+}
+
+model Patients {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  doctorId       String   @db.ObjectId
+  name           String
+  age            String
+  gender         String
+  email          String
+  address        String
+  phone          String
+  medicalHistory String
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
 }

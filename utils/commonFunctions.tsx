@@ -1,4 +1,4 @@
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string, format: string = "default") {
     const date = new Date(dateString);
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -20,9 +20,19 @@ export function formatDate(dateString: string) {
             default: return "th";
         }
     };
-
     const ordinal = getOrdinal(dayOfMonth);
 
+    // Format time as HH:mm AM/PM
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHour = (hours % 12 || 12).toString(); // Convert 0 to 12 for 12-hour format
+
+    const formattedTime = `${formattedHour}:${minutes} ${ampm}`;
+
+    if (format === "time") {
+        return `${dayName} ${dayOfMonth}${ordinal} ${monthName}'${year} @${formattedTime}`;
+    }
     return `${dayName} ${dayOfMonth}${ordinal} ${monthName}'${year}`;
 }
 

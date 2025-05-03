@@ -5,8 +5,9 @@ import React from 'react'
 
 const Header = () => {
   const session = useSession();
-  
+
   const logout = async () => {
+    localStorage.clear();
     await signOut({ callbackUrl: '/' });
   };
 
@@ -17,11 +18,11 @@ const Header = () => {
         <span className='font-semibold'>Welcome!</span>
         <span className='text-gray-600'>{session && session.data?.user?.name}</span>
       </div>
-        <Button
-          onClick={logout}
-          className='text-white text-sm md:text-base'>
-          Logout
-        </Button>
+      <Button
+        onClick={logout}
+        className='text-white text-sm md:text-base'>
+        Logout
+      </Button>
     </header>
   )
 }

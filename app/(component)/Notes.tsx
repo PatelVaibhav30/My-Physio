@@ -34,6 +34,7 @@ const Notes = ({ userid }: NoteProps) => {
 
 
     useEffect(() => {
+        localStorage.setItem("userId", userid || "");
         if (!open) {
             fetchNotes();
         }
