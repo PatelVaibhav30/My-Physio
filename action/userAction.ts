@@ -1,12 +1,9 @@
-"use server";
 import { db } from "@/utils/dbConfig"
 
 export async function createUser(name: string, email: string, password?: string) {
     try {
         const existingUser = await db.users.findUnique({
-            where: {
-                email: email,
-            },
+            where: {email},
         });
 
         if (existingUser) {

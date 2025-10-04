@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { Textarea } from '@/components/ui/textarea';
 import toast from 'react-hot-toast';
 import { addPatient } from '@/action/patientAction';
+import { IndianRupee } from 'lucide-react';
 
 export type PatientFormData = {
     doctorId: string;
@@ -20,6 +21,7 @@ export type PatientFormData = {
     address: string;
     phone: string;
     medicalHistory: string;
+    perdayCharge: number;
 };
 
 const AddPatient = () => {
@@ -33,15 +35,17 @@ const AddPatient = () => {
             email: "",
             address: "",
             phone: "",
-            medicalHistory: ""
+            medicalHistory: "",
+            perdayCharge: 0.0
         }
     });
     const gender = watch("gender");
 
 
     const onSubmit = async (data: PatientFormData) => {
+        debugger
         const phoneWithPrefix = `+91-${data.phone}`;
-        const updatedData = { ...data, phone: phoneWithPrefix, doctorId: localStorage.getItem("userId") || "" };
+        const updatedData = { ...data, perdayCharge: Number(data.perdayCharge), phone: phoneWithPrefix, doctorId: localStorage.getItem("userId") || "" };
 
         try {
             await addPatient(updatedData);
@@ -191,6 +195,23 @@ const AddPatient = () => {
                                     id='medicalhistory'
                                     placeholder='Medical history of patient if any'
                                     {...register("medicalHistory")}
+                                    className='col-span-3 mt-2'
+                                />
+                            </div>
+
+                            <div className="grid flex-col w-48">
+                                <Label htmlFor="perdaycharge">Per day charge <IndianRupee size={16}/></Label>
+                                <Input
+                                    id='perdaycharge'
+                                    placeholder='Per day charge'
+                                    type='number'
+                                    {...register("perdayCharge", {
+                                        required: "Per day charge is required",
+                                        min: {
+                                            value: 0,
+                                            message: "Per day charge must be a positive number"
+                                        }
+                                    })}
                                     className='col-span-3 mt-2'
                                 />
                             </div>

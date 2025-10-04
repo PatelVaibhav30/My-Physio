@@ -130,4 +130,14 @@
   }
 }
 
+.fc-event, .fc-event-main{
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.fc .fc-today-button{
+  text-transform: capitalize !important;
+}
+
 

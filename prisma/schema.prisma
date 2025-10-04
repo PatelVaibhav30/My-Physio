@@ -21,6 +21,7 @@ model Users {
   createdAt DateTime @default(now())
 
   notes    Notes[]
+  Visits  Visits[]
 }
 
 model Notes {
@@ -44,6 +45,22 @@ model Patients {
   address        String
   phone          String
   medicalHistory String
+  perdayCharge   Float
   isActive       Boolean  @default(true)
   createdAt      DateTime @default(now())
+
+  Visits Visits[]
+}
+
+model Visits {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  patientId   String   @db.ObjectId
+  doctorId    String   @db.ObjectId
+  visitDate   DateTime
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  doctor      Users   @relation(fields: [doctorId], references: [id])
+  patient     Patients @relation(fields: [patientId], references: [id])
 }
