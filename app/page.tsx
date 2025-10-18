@@ -5,8 +5,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 
 export default function Home() {
-
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   if (session && session.user) {
     redirect("/dashboard");
@@ -17,31 +16,46 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center">
-
-      <div className="mb-16">
-        <h1 className="text-4xl font-extrabold text-green-400">MY PHYSIO</h1>
-        <span className="text-xl font-extrabold text-gray-600">Guiding Recovery with Every Touch</span>
+    <div className="relative min-h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <Image
+          src="/banner.svg"
+          alt="banner"
+          fill
+          className="object-cover w-full h-full opacity-30 blur-sm"
+          priority
+        />
       </div>
 
-      <div className="flex items-stretch justify-center w-full max-w-4xl h-[500px] shadow-lg rounded-lg overflow-hidden">
-        
-        {/* Login Section */}
-        <div className="backdrop-blur-md flex flex-col justify-start w-full md:w-1/2 p-8 h-full">
-          <h1 className="text-3xl font-semibold text-gray-600">Login</h1>
-          <span className="mt-2 text-lg text-gray-500">Get yourself registered</span>
-          <Button onClick={login} className='w-full mt-5 bg-white text-gray-600 hover:bg-gray-100 border border-gray-300 flex items-center justify-center'>
-            <Image src="/google.svg" alt="logo" width={20} height={20} className="mr-2" />
-            Login with Google
-          </Button>
-        </div>
-
-        {/* Image Section - Hidden on smaller screens */}
-        <div className="hidden md:flex bg-[#E0E1DC] flex-col justify-center items-center w-1/2 h-full">
-          <Image src="/banner.svg" alt="banner" width={350} height={350} className="object-cover" />
-        </div>
+      {/* Overlay content */}
+      <div className="relative z-10 w-full max-w-md sm:max-w-lg mx-4 sm:mx-6 md:mx-8 p-6 sm:p-8 lg:p-10 bg-white/70 rounded-xl shadow-lg backdrop-blur-md flex flex-col items-center">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-green-400 mb-2 text-center">
+          MY PHYSIO
+        </h1>
+        <span className="text-lg sm:text-xl font-extrabold text-gray-600 mb-6 text-center">
+          Guiding Recovery with Every Touch
+        </span>
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-2 text-center">
+          Login
+        </h2>
+        <span className="mb-4 text-base sm:text-lg text-gray-500 text-center">
+          Get yourself registered
+        </span>
+        <Button
+          onClick={login}
+          className="w-full mt-2 bg-white text-gray-600 hover:bg-gray-100 border border-gray-300 flex items-center justify-center py-3 text-sm sm:text-base"
+        >
+          <Image
+            src="/google.svg"
+            alt="Google logo"
+            width={22}
+            height={22}
+            className="mr-2"
+          />
+          Login with Google
+        </Button>
       </div>
-
     </div>
   );
 }

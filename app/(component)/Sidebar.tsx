@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { LayoutDashboard, PersonStanding, Stethoscope } from 'lucide-react'
+import { LayoutDashboard, LogsIcon, PersonStanding, Stethoscope } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react';
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
@@ -17,6 +17,7 @@ const sidebarItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/patient', label: 'Patient list', icon: PersonStanding },
     { href: '/visit', label: 'Visit', icon: Stethoscope },
+    { href: '/logs', label: 'Logs', icon: LogsIcon },
 ]
 
 interface SidebarProps {
