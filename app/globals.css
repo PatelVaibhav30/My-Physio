@@ -120,7 +120,6 @@
   scrollbar-width: none;     /* Firefox */
 }
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -139,5 +138,4 @@
 .fc .fc-today-button{
   text-transform: capitalize !important;
 }
-
 

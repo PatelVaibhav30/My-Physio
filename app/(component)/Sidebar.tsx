@@ -1,25 +1,42 @@
 "use client";
 import Link from "next/link";
-import {LayoutDashboard, PersonStanding, Stethoscope } from 'lucide-react'
+import { LayoutDashboard, PersonStanding, Stethoscope } from 'lucide-react'
+import { signOut, useSession } from 'next-auth/react';
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarHeader,
+} from "@/components/ui/sidebar"
+
 const sidebarItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/patient', label: 'Patient list', icon:  PersonStanding},
-    { href: '/visit', label: 'Visit', icon:  Stethoscope},
+    { href: '/patient', label: 'Patient list', icon: PersonStanding },
+    { href: '/visit', label: 'Visit', icon: Stethoscope },
 ]
 
 interface SidebarProps {
     open: boolean
 }
 
-export default function Sidebar({ open }: SidebarProps) {
+export default function AppSidebar({ open }: SidebarProps) {
     const pathname = usePathname();
+
+    const session = useSession();
+
+    const logout = async () => {
+        localStorage.clear();
+        await signOut({ callbackUrl: '/' });
+    };
+
     return (
-        <aside className={`bg-gray-100 pt-20 text-gray-800 w-64 fixed inset-y-0 left-0 z-30 transform transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'} lg:translate-0`}>
-            <nav className="h-full flex flex-col justify-between">
-                <div className="px-4 py-6 space-y-8">
+        <Sidebar variant="floating">
+            <SidebarContent>
+                <SidebarGroup className="mt-4">
                     {sidebarItems.map((item) => (
                         <Link href={item.href} key={item.href} passHref>
                             <Button
@@ -31,8 +48,20 @@ export default function Sidebar({ open }: SidebarProps) {
                             </Button>
                         </Link>
                     ))}
+                </SidebarGroup>
+                <SidebarGroup />
+            </SidebarContent>
+            <SidebarFooter>
+                <div className='flex flex-col items-start'>
+                    <span className='font-semibold'>Welcome!</span>
+                    <span className='text-gray-600'>{session && session.data?.user?.name}</span>
                 </div>
-            </nav>
-        </aside>
+                <Button
+                    onClick={logout}
+                    className='text-white text-sm md:text-base'>
+                    Logout
+                </Button>
+            </SidebarFooter>
+        </Sidebar>
     )
 }
