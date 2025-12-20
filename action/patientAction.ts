@@ -17,6 +17,11 @@ export async function getPatients(doctorId: string) {
         const patients = await db.patients.findMany({
             where: { doctorId },
             orderBy: { createdAt: 'desc' },
+            include: {
+                _count: {
+                    select: { Visits: true }
+                }
+            }
         });
         return patients;
     } catch (error) {
