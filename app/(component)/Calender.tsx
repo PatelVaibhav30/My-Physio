@@ -106,7 +106,6 @@ const Calender = () => {
     }
 
     const onSubmit = async (data: PatientVisitData) => {
-        debugger;
         try {
             if (!selectedDate) return;
 

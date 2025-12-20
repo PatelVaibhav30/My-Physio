@@ -1,4 +1,4 @@
-import { getPatientCount } from '@/action/dashboardAction';
+import { getPatientCount, getSettledEarning, getUnsettledEarning } from '@/action/dashboardAction';
 import { createUser } from '@/action/userAction';
 import Notes from '@/app/(component)/Notes';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -11,7 +11,10 @@ export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
     const user = await createUser(session?.user?.name || "Anonymous", session?.user?.email || "anonymous@example.com", "");
 
-    const patientCount = await getPatientCount(session?.user?.email); //await getPatientCount(user.id);
+
+    const patientCount = await getPatientCount(session?.user?.email);
+    const settledEarning = await getSettledEarning(session?.user?.email);
+    const unsettledEarning = await getUnsettledEarning(session?.user?.email);
 
     return (
         <div className="mx-auto px-6 py-6 border-2 rounded-md bg-white">
@@ -28,13 +31,13 @@ export default async function DashboardPage() {
 
                 <div className='flex flex-col items-center justify-center rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer p-3 shadow-md bg-blue-100'>
                     <Image height={50} width={50} src="/settled.png" alt='patient' />
-                    <span className='text-3xl font-extrabold text-blue-700'>{"Settled earning"}</span>
+                    <span className='text-3xl font-extrabold text-blue-700'>₹{settledEarning}</span>
                     <h1 className="text-sm font-medium text-gray-600 text-center mt-1">TOTAL EARNINGS</h1>
                 </div>
 
                 <div className='flex flex-col items-center justify-center rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer p-3 shadow-md bg-blue-100'>
                     <Image height={50} width={50} src="/unsettled.png" alt='patient' />
-                    <span className='text-3xl font-extrabold text-blue-700'>{"unsettled earning"}</span>
+                    <span className='text-3xl font-extrabold text-blue-700'>₹{unsettledEarning}</span>
                     <h1 className="text-sm font-medium text-gray-600 text-center mt-1">UNSETTLED AMOUNT</h1>
                 </div>
             </div>
