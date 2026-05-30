@@ -8,6 +8,7 @@ import { CircleSmall, IndianRupee, Mail, MapPin, PhoneCall, Search } from 'lucid
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import SettlePayment from './SettlePayment';
+import GenerateInvoice from './GenerateInvoice';
 
 
 const PatientList = () => {
@@ -106,7 +107,10 @@ const PatientList = () => {
                                     <IndianRupee className='text-blue-400' size={15} />
                                     <span>{patient._count.Visits * patient.perdayCharge}</span>
                                 </div>
-                                <SettlePayment patient={patient} />
+                                <div className='flex'>
+                                    <SettlePayment patient={patient} />
+                                    <GenerateInvoice patient={patient} />
+                                </div>
                             </div>
                         </div>
                     ))

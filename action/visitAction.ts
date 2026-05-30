@@ -35,3 +35,18 @@ export async function getVisitsForCalendar(doctorId: string) {
         throw new Error("Could not fetch visits");
     }
 }
+
+export async function getPatientVisitDates(patientId: string) {
+    try {
+        const visits = await db.visits.findMany({
+            where: { patientId },
+            select: { visitDate: true },
+            orderBy: { visitDate: "asc" },
+        });
+
+        return visits.map((v) => v.visitDate);
+    } catch (error) {
+        console.error("Error fetching patient visit dates:", error);
+        throw new Error("Could not fetch patient visit dates");
+    }
+}

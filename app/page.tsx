@@ -55,6 +55,13 @@ export default function Home() {
           />
           Login with Google
         </Button>
+        {/* TODO:: Add login for patients separately */}
+        <label className="mt-6 mb-2 text-base font-medium text-gray-700 text-center w-full">Login as patient</label>
+        <Button
+          className="w-full bg-green-500 text-white hover:bg-green-600 border border-green-600 flex items-center justify-center py-3 text-sm sm:text-base"
+        >
+          Login as Patient
+        </Button>
       </div>
     </div>
   );
