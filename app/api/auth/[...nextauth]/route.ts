@@ -1,21 +1,5 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-
-const authOptions = {
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-  ],
-  secret: process.env.NEXTAUTH_SECRET, //generate a random string and set it as your secret
-  callbacks: {
-    async session({ session, token }: { session: any; token: any }) {
-      session.user.id = token.sub; 
-      return session;
-    },
-  },
-};
+import { authOptions } from "@/lib/auth";
 
 const handler = NextAuth(authOptions);
 

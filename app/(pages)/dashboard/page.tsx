@@ -1,7 +1,7 @@
 import { getPatientCount, getSettledEarning, getUnsettledEarning } from '@/action/dashboardAction';
 import { createUser } from '@/action/userAction';
 import Notes from '@/app/(component)/Notes';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
