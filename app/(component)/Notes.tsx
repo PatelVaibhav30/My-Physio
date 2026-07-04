@@ -101,17 +101,17 @@ const Notes = ({ userid }: NoteProps) => {
                         <DialogTitle>Note</DialogTitle>
                         <DialogDescription>
                             Select your favorite color
-                            <div className="flex flex-wrap gap-2 py-4">
-                                {colors.map((color) => (
-                                    <div
-                                        key={color}
-                                        className={`w-10 h-10 rounded-full cursor-pointer border-2 ${selectedColor === color ? 'border-black' : 'border-transparent'}`}
-                                        style={{ backgroundColor: color }}
-                                        onClick={() => handleColorClick(color)}
-                                    />
-                                ))}
-                            </div>
                         </DialogDescription>
+                        <div className="flex flex-wrap gap-2 py-4">
+                            {colors.map((color) => (
+                                <div
+                                    key={color}
+                                    className={`w-10 h-10 rounded-full cursor-pointer border-2 ${selectedColor === color ? 'border-black' : 'border-transparent'}`}
+                                    style={{ backgroundColor: color }}
+                                    onClick={() => handleColorClick(color)}
+                                />
+                            ))}
+                        </div>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">

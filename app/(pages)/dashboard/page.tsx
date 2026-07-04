@@ -1,6 +1,6 @@
 import { getPatientCount, getSettledEarning, getUnsettledEarning } from '@/action/dashboardAction';
 import { createUser } from '@/action/userAction';
-import Notes from '@/app/(component)/Notes';
+import Notes from '../../(component)/Notes';
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
@@ -17,9 +17,9 @@ export default async function DashboardPage() {
     const unsettledEarning = await getUnsettledEarning(session?.user?.email);
 
     return (
-        <div className="mx-auto px-6 py-6 border-2 rounded-md bg-white">
+        <div className="mx-auto w-full max-w-6xl px-6 py-6 border-2 rounded-md bg-white">
             <h1 className='text-3xl font-semibold mb-6'>Dashboard</h1>
-            <div className='grid grid-cols-3 gap-6'>
+            <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
                 <Link href="/patient">
                     <div className='flex flex-col items-center justify-center rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer p-3 shadow-md bg-blue-100'>
 
