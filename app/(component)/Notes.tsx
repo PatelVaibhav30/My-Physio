@@ -86,14 +86,14 @@ const Notes = ({ userid }: NoteProps) => {
     }
 
     return (
-        <div className='mt-4 p-4 h-80 w-full shadow-md border-2 rounded-lg flex flex-col relative'>
+        <div className='mt-4 min-h-80 w-full rounded-lg border-2 p-4 shadow-md'>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <div className={`absolute right-4 w-32 h-32 bg-gray-100 rounded-md shadow-md flex flex-col items-center justify-start cursor-pointer hover:bg-gray-300 transition duration-200 ease-in-out ${userAddedNotes.length === 5 ? "pointer-events-none" : ""}`}>
+                    <div className={`ml-auto flex h-24 w-24 cursor-pointer flex-col items-center justify-start rounded-md bg-gray-100 shadow-md transition duration-200 ease-in-out hover:bg-gray-300 sm:h-32 sm:w-32 ${userAddedNotes.length === 5 ? "pointer-events-none" : ""}`}>
                         <h2 className="font-semibold text-md mt-2 text-center">{userAddedNotes.length === 5 ? "Limit reached! " : "Add note"}</h2>
                         <Frown size={50} className={`text-gray-400 ${userAddedNotes.length !== 5 ? "hidden" : ""}`} />
                         <span className={`${userAddedNotes.length === 5 ? "hidden" : ""} text-sm text-gray-800`}>{5 - userAddedNotes.length} remaining</span>
-                        <SquarePlus size={50} className={`text-gray-400 ${userAddedNotes.length === 5 ? "hidden" : ""}`} />
+                        <SquarePlus size={40} className={`text-gray-400 sm:h-[50px] sm:w-[50px] ${userAddedNotes.length === 5 ? "hidden" : ""}`} />
                     </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
@@ -133,7 +133,7 @@ const Notes = ({ userid }: NoteProps) => {
                 </DialogContent>
             </Dialog>
 
-            <div className='mt-12 flex items-center justify-start gap-4'>
+            <div className='mt-5 grid grid-cols-2 items-start gap-4 sm:mt-12 sm:flex sm:flex-wrap'>
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
@@ -152,9 +152,9 @@ const Notes = ({ userid }: NoteProps) => {
                         />
                     ))
                 ) : (
-                    <div className='text-xl font-semibold absolute left-[20%] top-[50%]'>
-                        <p >Add notes for quick reminders!</p>
-                        <p className='text-gray-300'>Add upto 5 notes</p>
+                    <div className='col-span-2 py-8 text-center text-sm font-semibold sm:text-base'>
+                        <p>Add notes for quick reminders!</p>
+                        <p className='text-gray-300'>Add up to 5 notes</p>
                     </div>
                 )}
             </div>

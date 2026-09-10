@@ -11,7 +11,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             <SidebarProvider>
                 <AppSidebar open={true} />
                 <SidebarTrigger className='cursor-pointer'/>
-                <main className='w-[1250px] px-4 pt-12'>
+                <main className='min-w-0 w-full px-3 pt-12 sm:px-4'>
                     {children}
                 </main>
             </SidebarProvider>

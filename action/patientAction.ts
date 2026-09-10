@@ -1,11 +1,13 @@
 "use server";
 import { PatientFormData } from "@/app/(component)/AddPatient";
 import { db } from "@/utils/dbConfig";
+import { revalidatePath } from "next/cache";
 
 
 export async function addPatient(patientData: PatientFormData) {
     try {
         await db.patients.create({ data: patientData })
+        revalidatePath('/patient');
     } catch (error) {
         console.error('Error in addPatient:', error);
         throw new Error('Error while adding patient.');

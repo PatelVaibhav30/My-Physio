@@ -1,11 +1,22 @@
 'use server';
 import { db } from "@/utils/dbConfig"
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import { createUser } from "./userAction";
 
 export async function createNote(title: string, content: string, color: string, userId: string) {
     try {
+        const session = await getServerSession(authOptions);
+        const authenticatedEmail = session?.user?.email;
+        if (!authenticatedEmail) {
+            throw new Error('User is not authenticated.');
+        }
+
+        const user = await createUser(session.user.name || 'Anonymous', authenticatedEmail, '');
+
         // Count existing notes for the user
         const userNoteCount = await db.notes.count({
-            where: { userId },
+            where: { userId: user.id },
         });
 
         if (userNoteCount >= 5) {
@@ -18,7 +29,7 @@ export async function createNote(title: string, content: string, color: string, 
                 title,
                 content,
                 color,
-                userId,
+                userId: user.id,
             },
         });
 
